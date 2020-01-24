@@ -1,12 +1,12 @@
 {
-  "name": "semversion",
+  "name": "@webburrito/semversion",
   "version": "1.0.1",
   "description": "test",
   "main": "cmd.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Tom Kiernan",
   "license": "ISC",
   "dependencies": {
     "chalk": "^3.0.0",
