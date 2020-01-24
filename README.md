@@ -6,8 +6,20 @@ Semversion is a package designed to bump up version number based on [https://sem
 
 ## Aims/Goals
 
-{captureBefore} [ ] 
-
+- [x] Build CLI tool
+- [ ] Add more options to cli tool
+- [ ] Allow recursive directory version bump
+- [ ] Allow own/or alter regex for version
+- [ ] Publish to npm
+- [ ] Automate changes in this repo to push new semver version to package.json
+- [ ] Use minor number to create new package
+- [ ] Break up semver into seperate files / methods, reduce complexity
+- [ ] Describe how cli works in depth
+- [ ] Maybe put together road map
+- [x] Create Read me
+- [ ] Create a contributing.md
+- [ ] Maybe create a contributors page
+- [ ] Add some testing
 
 ## Contributing
 
@@ -15,11 +27,11 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-Funnily enough this project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Funnily enough this project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/tomkiernan120/semversion/tags). 
 
 ## Authors
 
-* **Tom Kiernan** - *Initial work* - [PurpleBooth](https://github.com/tomkiernan120)
+* **Tom Kiernan** - *Initial work*
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
