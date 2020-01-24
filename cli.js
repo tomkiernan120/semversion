@@ -14,55 +14,54 @@ const optionDefinitions = [
   { name: 'type', alias: 't', type: String }
 ];
 
-const options = commandLineArgs(optionDefinitions);
-
-console.log(options );
+let options = commandLineArgs(optionDefinitions);
 
 console.log(
   chalk.red(
-    figlet.textSync( 'semversion', { horizontalLayout: "full" } )
+    figlet.textSync( 'semversion', { horizontalLayout: 'full' } )
   )
 );
 
+async function handleBumpSemVer() {
+  require('./')(options);
+}
+
+async function getOptions() {
+  options = await inquirer.prompt([
+   {
+     name: 'src',
+     type: 'input',
+     message: 'Please enter the file path of the file you wish to bump the version of: ',
+     validate: function(  value ) {
+       if( value.length && isValid( value ) ) {
+         return true;
+       }
+       else {
+         return 'Please enter a filepath';
+       }
+     }
+   },
+   {
+     name: 'type',
+     type: 'list',
+     message: 'Patch type',
+     choices: [ 'Major', 'Minor', 'Patch' ],
+     default: 'Patch'
+   }
+ ])
+ .then(answers => {
+   if( options ) {
+     return {...options, ...answers};
+   }
+   // Use user feedback for... whatever!!
+ })
+ .catch( err => console.log( err ) );
+ await handleBumpSemVer();
+}
 
 if( options.interactive ) {
-  
-  
-   inquirer.prompt([
-    {
-      name: 'src',
-      type: 'input',
-      message: 'Please enter the file path of the file you wish to bump the version of: ',
-      validate: function(  value ) {
-        if( value.length && isValid( value ) ) {
-          return true;
-        }
-        else {
-          return 'Please enter a filepath';
-        }
-      }
-    },
-    {
-      name: 'type',
-      type: 'list',
-      message: 'Patch type',
-      choices: [ 'Major', 'Minor', 'Patch' ],
-      default: 'Patch'
-    }
-  ])
-  .then(answers => {
-    if( options ) {
-      otpions = {...options, ...answers};
-    }
-    // Use user feedback for... whatever!!
-  });
-  
+  getOptions();
 }
 else {
-  
-  
-    
+  handleBumpSemVer();
 }
-
-
-console.log( options )
