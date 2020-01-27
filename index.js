@@ -1,28 +1,22 @@
-const fs = require( 'fs' );
 const semver = require('semver');
 const versionRegex = /(\d+\.\d+\.\d+)/gm;
 
+const { validateOpts, fileExists } = require('./libs/validate');
+const { getFileContents } = require('./libs/file');
+
 module.exports = function( options ) {
+  
   let fileData, m;
   
-  if( !options.src ) {
-    throw new Error( 'No file or path set.' );
-  }
-  
-  if( !options.type ) {
-    throw new Error( 'Please specify a patch \'type\'.' );
-  }
+  validateOpts( options );
   
   try{
-    if( !fs.existsSync( options.src ) ) {
-      throw new Error( `The file or path: ${options.src} specified could not be found.` );
-    }
-    
-    fileData = fs.readFileSync( options.src );
+
+    fileData = getFileContents( options.src );
     
     if( fileData ) {
       
-      fileData = fileData.toString();
+        console.log( typeof fileData );
       
         while( (m = versionRegex.exec( fileData )) !== null ) {
       
@@ -30,10 +24,14 @@ module.exports = function( options ) {
           if( m.index === versionRegex.lastIndex ) {
             versionRegex.lastIndex++;
           }
-      
+
+          console.log( m );
+
           // m.forEach((match, groupIndex) => {
           //   // console.log(`Found match, group ${groupIndex}: ${match}`);
           // });
+      
+
       
           if( m[1]  ) {
             
@@ -42,6 +40,8 @@ module.exports = function( options ) {
             if( Array.isArray( version ) ) {
               version = version[0];
             }
+            
+                console.log( version );
           
             let oldVersion = semver.clean( version );
             let newVersion = oldVersion.split('.').map((val) => parseInt( val ) );

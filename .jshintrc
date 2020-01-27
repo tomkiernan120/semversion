@@ -31,7 +31,7 @@
   "maxerr":        50,
   "maxlen":        false,
   "maxparams":     4,
-  "maxstatements": 5,
+  "maxstatements": 10,
   "mootools":      false,
   "moz":           true,
   "multistr":      true,
