@@ -7,6 +7,8 @@ Semversion is a package designed to bump up version number based on [https://sem
 ## Aims/Goals
 
 - [x] Build CLI tool
+  - [x] currently only setup for npm/package.json
+  - [ ] look into different software with semver, parsing any file containing a correct semver; 
 - [ ] Add more options to cli tool
 - [ ] Allow recursive directory version bump
 - [ ] Allow own/or alter regex for version
