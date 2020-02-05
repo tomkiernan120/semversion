@@ -9,15 +9,15 @@ const minimist = require( 'minimist' );
 const fs = require('fs');
 const path = require('path');
 const currentDirectory = process.cwd();
+const { run } = require( '../' );
 
 const semverRegex = require('../helpers/semver-regex');
 
 const argv = minimist( process.argv.slice(2) );
 
 let checkFiles = [ 'package.json' ];
-checkFiles = [];
 
-let ignore= [ 'node_modules' ];
+let ignore = [ 'node_modules', '.dotfiles' ];
 
 let filesToProcess = [];
 let type = false;
@@ -36,10 +36,17 @@ else { // check type
   if( !type ) { // search directory
     const asyncWalk = require( '../helpers/asyncwalk' );
     
-    let files = asyncWalk( currentDirectory );
+    let files = asyncWalk( currentDirectory, null, ignore );
     
-    console.log(files );
+    type = files.filter( x => {
+      return checkFiles.includes( path.basename(x).toLowerCase() )
+    });
     
+    console.log( type );
+    
+    console.log( run );
+    
+    run({ cwd: process.cwd(), type: type[0], versioning: 'patch' });
   }
   
 }
