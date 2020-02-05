@@ -9,9 +9,8 @@ const minimist = require( 'minimist' );
 const fs = require('fs');
 const path = require('path');
 const currentDirectory = process.cwd();
+const dictionary = require( '../helpers/dictionary' );
 const { run } = require( '../' );
-
-const semverRegex = require('../helpers/semver-regex');
 
 const argv = minimist( process.argv.slice(2) );
 
@@ -19,17 +18,34 @@ let checkFiles = [ 'package.json' ];
 
 let ignore = [ 'node_modules', '.dotfiles' ];
 
-let filesToProcess = [];
 let type = false;
+let file;
+
+let version = 'patch';
+
+if( argv.v || argv.version ) {
+
+  if( Object.keys( dictionary ).includes( argv.v ) ) {
+    version = argv.v;
+  }
+  else if( Object.keys( dictionary ).includes( argv.version ) ) {
+    version = argv.version;
+  }
+  else {
+    throw new Error( `unknown version` );
+  }
+}
 
 if( argv._.length ) { // if file paths are defined check if they have semver;
+  
+  console.log( argv );
   
 }
 else { // check type
   
   checkFiles.forEach( function( val ) { // currently finds the last if they all exist
      if( fs.existsSync( path.join( currentDirectory, val ) ) ) {
-      type = val;
+      file = val;
     }
   });
   
@@ -38,15 +54,14 @@ else { // check type
     
     let files = asyncWalk( currentDirectory, null, ignore );
     
-    type = files.filter( x => {
+    file = files.filter( x => {
       return checkFiles.includes( path.basename(x).toLowerCase() )
     });
     
-    console.log( type );
-    
-    console.log( run );
-    
-    run({ cwd: process.cwd(), type: type[0], versioning: 'patch' });
+    if( file ) {
+      file = file[0];
+    }
   }
   
+  run({ cwd: process.cwd(), file, versioning: version, fileType: checkFiles[ checkFiles.indexOf( path.basename( file ) ) ] });
 }
