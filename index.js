@@ -43,7 +43,7 @@ module.exports.run = async function( context, plugin ) { // XXX can choose to ex
             if( err ){
               throw err;
             }
-            console.log( `version updated in: ${filePath}` );
+            console.log( `version updated to "${newSemver.join( '.' )}" in: ${filePath}` );
           });
         }
       }

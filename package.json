@@ -1,6 +1,6 @@
 {
   "name": "@webburrito/semversion",
-  "version": "0.3.4",
+  "version": "0.2.2",
   "description": "test",
   "main": "cmd.js",
   "scripts": {
